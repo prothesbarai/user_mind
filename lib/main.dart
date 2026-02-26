@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:usermind/providers/user_provider.dart';
 import 'package:usermind/screens/splash_screen/splash_screen.dart';
+import 'package:usermind/services/hive_service.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  HiveService.initHive();
+  runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => UserProvider()),
+        ],
+        child: MyApp(),
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {
